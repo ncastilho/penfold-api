@@ -1,33 +1,28 @@
-import React, {Component} from 'react';
-import logo from '../images/logo.svg';
-import './App.css';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import HomePage from './HomePage/HomePage';
+import NotFoundPage from './NotFoundPage/NotFoundPage';
+import PropTypes from 'prop-types';
+import Header from './Header/Header'
+import Footer from './Footer/Footer'
 
-class App extends Component {
-
-  state = {};
-
-  componentDidMount() {
-    setInterval(this.hello, 250);
-  }
-
-  hello = () => {
-    fetch('/api/hello')
-        .then(response => response.text())
-        .then(message => {
-          this.setState({message: message});
-        });
-  };
-
-  render() {
-    return (
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo"/>
-            <h1 className="App-title">{this.state.message}</h1>
-          </header>
-        </div>
-    );
-  }
+class App extends React.Component {
+    render() {
+        return (
+            <React.Fragment>
+                <Header />
+                <Switch>
+                    <Route exact path='/' component={HomePage} />
+                    <Route component={NotFoundPage} />
+                </Switch>
+                <Footer />
+            </React.Fragment>
+        );
+    }
 }
+
+App.propTypes = {
+    children: PropTypes.element
+};
 
 export default App;
