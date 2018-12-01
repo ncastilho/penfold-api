@@ -19409,11 +19409,11 @@ img.u-block-hover__main--magnifier-top-left {
   line-height: 10px; }
 
 .u-blockquote-v2::before {
-  content: "\“";
+  content: "\\“";
   padding-right: 5px; }
 
 .u-blockquote-v2::after {
-  content: "\”";
+  content: "\\”";
   padding-left: 5px; }
 
 .u-blockquote-v3 {
@@ -21461,7 +21461,7 @@ pre[class*="language-"] .toolbar-item a {
   transition-timing-function: ease-in; }
 
 .js-carousel {
-  background: url(../../assets/img/preloaders/preloader-black.svg) no-repeat 50% 50%; }
+  background: url(../img/preloaders/preloader-black.svg) no-repeat 50% 50%; }
 
 .js-carousel .js-next,
 .js-carousel .js-prev {
