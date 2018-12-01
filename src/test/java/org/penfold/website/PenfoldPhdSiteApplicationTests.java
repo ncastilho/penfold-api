@@ -1,4 +1,4 @@
-package org.penfold.site;
+package org.penfold.website;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
