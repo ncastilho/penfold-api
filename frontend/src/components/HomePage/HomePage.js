@@ -47,7 +47,18 @@ const HomePage = () => {
     <section className="g-min-height-80vh">
       <div className="container">
         <div className="row">
+          <div className="col-lg-12 g-mb-50 g-mb-0--lg">
+
+            <a href="#!" className="btn btn-lg u-btn-blue rounded-0 g-mr-10 g-mb-15">Add Patient</a>
+          </div>
+        </div>
+        <div className="row">
           <div className="col-lg-3 g-mb-50 g-mb-0--lg">
+            <form>
+              <div className="form-group g-mb-20">
+                <input id="inputGroup1_1" className="form-control form-control-md rounded-0" type="text"  placeholder="Search..." />
+              </div>
+            </form>
               { contactList }
           </div>
           <div className="col-lg-9">
@@ -56,7 +67,7 @@ const HomePage = () => {
                 data-btn-classes="btn btn-md btn-block rounded-0 u-btn-outline-primary g-mb-20">
               <li className="nav-item">
                 <a className="nav-link g-py-10 active" data-toggle="tab" href="#nav-1-1-default-hor-left-underline--1"
-                   role="tab">Contact Details</a>
+                   role="tab">Patient Details</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link g-py-10" data-toggle="tab" href="#nav-1-1-default-hor-left-underline--2"
@@ -140,11 +151,69 @@ const HomePage = () => {
               <div className="tab-pane fade" id="nav-1-1-default-hor-left-underline--3" role="tabpanel"
                    data-parent="#nav-1-1-default-hor-left-underline">
                 <h2 className="h4 g-font-weight-300">Message History</h2>
-                <p className="g-mb-25">Below shows the history and send / received status for triggered messages.</p>
+                <p className="g-mb-25">Below shows the history of triggered messages and their status.</p>
 
-                <form>
+                <div className="table-responsive">
+                  <table className="table table-bordered u-table--v2">
+                    <thead className="text-uppercase g-letter-spacing-1">
+                    <tr>
+                      <th className="g-font-weight-300 g-color-black g-min-width-200">Message</th>
+                      <th className="g-font-weight-300 g-color-black">Status</th>
+                      <th className="g-font-weight-300 g-color-black">Date</th>
+                    </tr>
+                    </thead>
 
-                </form>
+                    <tbody>
+                    <tr>
+                      <td className="align-middle">
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores aut consequatur debitis dignissimos eos ex facilis fugiat iure nemo numquam officia pariatur, quisquam saepe sunt vel veniam vitae? Ipsum.</span>
+                      </td>
+                      <td className="align-middle">
+                        <a className="btn btn-block u-btn-primary g-rounded-50 g-py-5" href="#!">
+                          <i className="fa fa-arrows-v g-mr-5"></i> Received
+                        </a>
+                      </td>
+                      <td className="align-middle text-nowrap">
+                        <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 16, 2017</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 11:49 PM</span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="align-middle">
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda beatae cupiditate eum fuga fugiat itaque nihil provident quam quidem voluptate. Accusantium at culpa in quod? Enim fugiat iste quia veritatis.</span>
+                      </td>
+
+                      <td className="align-middle">
+                        <a className="btn btn-block u-btn-pink g-rounded-50 g-py-5" href="#!">
+                          <i className="fa fa-level-up g-mr-5"></i> Failed
+                        </a>
+                      </td>
+                      <td className="align-middle text-nowrap">
+                        <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 16, 2017</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 11:49 PM</span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="align-middle">
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci dolorum eius ipsam iste, molestias obcaecati perspiciatis quae soluta tenetur unde ut voluptatem! Aliquam eligendi error est fuga hic odit, unde!</span>
+                      </td>
+
+                      <td className="align-middle">
+                        <a className="btn btn-block u-btn-cyan g-rounded-50 g-py-5" href="#!">
+                          <i className="fa fa-sort-amount-desc g-mr-5"></i> Sent
+                        </a>
+                      </td>
+                      <td className="align-middle text-nowrap">
+                        <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 16, 2017</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 11:49 PM</span>
+                      </td>
+                    </tr>
+
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               <div className="tab-pane fade" id="nav-1-1-default-hor-left-underline--4" role="tabpanel"
