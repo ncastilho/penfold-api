@@ -168,7 +168,7 @@ const HomePage = () => {
               <div className="tab-pane fade show active" id="nav-1-1-default-hor-left-underline--1" role="tabpanel"
                    data-parent="#nav-1-1-default-hor-left-underline">
                 <h2 className="h4 g-font-weight-300">Manage Name, Email Address and Phone Number</h2>
-                <p>Below are name, email and mobile contacts on file for this contact.</p>
+                <p>Below are name, email and mobile contacts on file for this person.</p>
 
                 <ul className="list-unstyled g-mb-30">
 
@@ -288,9 +288,10 @@ const HomePage = () => {
                         <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores aut consequatur debitis dignissimos eos ex facilis fugiat iure nemo numquam officia pariatur, quisquam saepe sunt vel veniam vitae? Ipsum.</span>
                       </td>
                       <td className="align-middle">
-                        <a className="btn btn-block u-btn-primary g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-check g-mr-5"></i> Received
-                        </a>
+                        <span className="u-label g-bg-primary g-rounded-50 g-py-5 g-min-width-90">
+                          <i className="fa fa-check g-mr-5"></i>
+                          Received
+                        </span>
                       </td>
                       <td className="align-middle text-nowrap">
                         <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 16, 2017</span>
@@ -304,9 +305,10 @@ const HomePage = () => {
                       </td>
 
                       <td className="align-middle">
-                        <a className="btn btn-block u-btn-red g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-times g-mr-5"></i> Failed
-                        </a>
+                        <span className="u-label g-bg-red g-rounded-50 g-py-5 g-min-width-90">
+                          <i className="fa fa-times g-mr-5"></i>
+                          Failed
+                        </span>
                       </td>
                       <td className="align-middle text-nowrap">
                         <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 16, 2017</span>
@@ -320,9 +322,10 @@ const HomePage = () => {
                       </td>
 
                       <td className="align-middle">
-                        <a className="btn btn-block u-btn-orange g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-info g-mr-5"></i> Sent
-                        </a>
+                        <span className="u-label g-bg-orange g-rounded-50 g-py-5 g-min-width-90">
+                           <i className="fa fa-info g-mr-5"></i>
+                          Sent
+                        </span>
                       </td>
                       <td className="align-middle text-nowrap">
                         <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 17, 2017</span>
@@ -335,9 +338,10 @@ const HomePage = () => {
                         <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores aut consequatur debitis dignissimos eos ex facilis fugiat iure nemo numquam officia pariatur, quisquam saepe sunt vel veniam vitae? Ipsum.</span>
                       </td>
                       <td className="align-middle">
-                        <a className="btn btn-block u-btn-primary g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-check g-mr-5"></i> Received
-                        </a>
+                        <span className="u-label g-bg-primary g-rounded-50 g-py-5 g-min-width-90">
+                          <i className="fa fa-check g-mr-5"></i>
+                          Received
+                        </span>
                       </td>
                       <td className="align-middle text-nowrap">
                         <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 17, 2017</span>
@@ -350,9 +354,10 @@ const HomePage = () => {
                         <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores aut consequatur debitis dignissimos eos ex facilis fugiat iure nemo numquam officia pariatur, quisquam saepe sunt vel veniam vitae? Ipsum.</span>
                       </td>
                       <td className="align-middle">
-                        <a className="btn btn-block u-btn-primary g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-check g-mr-5"></i> Received
-                        </a>
+                        <span className="u-label g-bg-primary g-rounded-50 g-py-5 g-min-width-90">
+                          <i className="fa fa-check g-mr-5"></i>
+                          Received
+                        </span>
                       </td>
                       <td className="align-middle text-nowrap">
                         <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 18, 2017</span>
@@ -365,9 +370,10 @@ const HomePage = () => {
                         <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores aut consequatur debitis dignissimos eos ex facilis fugiat iure nemo numquam officia pariatur, quisquam saepe sunt vel veniam vitae? Ipsum.</span>
                       </td>
                       <td className="align-middle">
-                        <a className="btn btn-block u-btn-red g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-times g-mr-5"></i> Failed
-                        </a>
+                        <span className="u-label g-bg-red g-rounded-50 g-py-5 g-min-width-90">
+                          <i className="fa fa-times g-mr-5"></i>
+                          Failed
+                        </span>
                       </td>
                       <td className="align-middle text-nowrap">
                         <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 18, 2017</span>
@@ -380,9 +386,10 @@ const HomePage = () => {
                         <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores aut consequatur debitis dignissimos eos ex facilis fugiat iure nemo numquam officia pariatur, quisquam saepe sunt vel veniam vitae? Ipsum.</span>
                       </td>
                       <td className="align-middle">
-                        <a className="btn btn-block u-btn-primary g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-check g-mr-5"></i> Received
-                        </a>
+                        <span className="u-label g-bg-primary g-rounded-50 g-py-5 g-min-width-90">
+                          <i className="fa fa-check g-mr-5"></i>
+                          Received
+                        </span>
                       </td>
                       <td className="align-middle text-nowrap">
                         <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 19, 2017</span>
@@ -396,9 +403,10 @@ const HomePage = () => {
                       </td>
 
                       <td className="align-middle">
-                        <a className="btn btn-block u-btn-orange g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-info g-mr-5"></i> Sent
-                        </a>
+                        <span className="u-label g-bg-orange g-rounded-50 g-py-5 g-min-width-90">
+                           <i className="fa fa-info g-mr-5"></i>
+                          Sent
+                        </span>
                       </td>
                       <td className="align-middle text-nowrap">
                         <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 19, 2017</span>
@@ -417,7 +425,7 @@ const HomePage = () => {
               <div className="tab-pane fade" id="nav-1-1-default-hor-left-underline--4" role="tabpanel"
                    data-parent="#nav-1-1-default-hor-left-underline">
                 <h2 className="h4 g-font-weight-300">Manage Settings</h2>
-                <p className="g-mb-25">Below are the settings you can change for this patient.</p>
+                <p className="g-mb-25">Below are the settings you can change for this person.</p>
 
                 <form>
 
@@ -440,7 +448,10 @@ const HomePage = () => {
                   <div className="form-group">
                     <label className="d-flex align-items-center justify-content-between">
                       <span>Mobile verification
-                        <span className="u-label u-label-warning g-ml-10 g-mb-15">Unverified</span>
+                         <span className="u-label g-bg-primary g-rounded-50 g-ml-10 g-mb-15">
+                          <i className="fa fa-check g-mr-5"></i>
+                          Verified
+                        </span>
                       </span>
                       <button type="button" className="btn btn-primary btn-sm rounded-0 g-mr-0 g-mb-0">Resend</button>
                     </label>
