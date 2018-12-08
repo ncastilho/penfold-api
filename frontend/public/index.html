@@ -25,13 +25,18 @@
   <link href="./assets/vendor/icon-line-pro/style.css" rel="stylesheet">
   <link href="./assets/vendor/icon-hs/style.css" rel="stylesheet">
 
+  <!-- CSS Implementing Plugins -->
+  <link  rel="stylesheet" href="./assets/vendor/animate.css">
+  <link  rel="stylesheet" href="./assets/vendor/custombox/custombox.min.css">
+
   <!-- CSS Unify -->
   <link rel="stylesheet" href="./assets/css/unify-core.css">
   <link rel="stylesheet" href="./assets/css/unify-components.css">
   <link rel="stylesheet" href="./assets/css/unify-globals.css">
 
   <!-- CSS Customization -->
-  <link rel="stylesheet" href="../../assets/css/custom.css">
+  <link rel="stylesheet" href="./assets/css/custom.css">
+
 </head>
 
 <body>
@@ -46,8 +51,20 @@
   <script src="./assets/vendor/popper.min.js"></script>
   <script src="./assets/vendor/bootstrap/bootstrap.min.js"></script>
 
+  <!-- JS Implementing Plugins -->
+  <script  src="./assets/vendor/custombox/custombox.min.js"></script>
+
   <!-- JS Unify -->
   <script src="./assets/js/hs.core.js"></script>
+  <script src="./assets/js/components/hs.modal-window.js"></script>
+
+  <!-- JS Plugins Init. -->
+  <script >
+    $(document).on('ready', function () {
+      // initialization of popups
+        $.HSCore.components.HSModalWindow.init('[data-modal-target]');
+    });
+  </script>
 
 </body>
 </html>
