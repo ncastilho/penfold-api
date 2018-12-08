@@ -11,11 +11,12 @@ const HomePage = () => {
           </div>
         </div>
         <div className="row">
+
           <div className="col-lg-3 g-mb-50 g-mb-0--lg">
             <form>
               <div className="form-group g-mb-0">
                 <div className="input-group g-brd-primary--focus">
-                  <input id="inputGroup1_1" className="form-control form-control-md border-right-0 rounded-0 pr-0" type="text"  placeholder="Search..." />
+                  <input id="inputGroup1_1" className="form-control form-control-md border-right-0 rounded-0 pr-0" type="text"  placeholder="..." />
                   <div className="input-group-append">
                     <span className="input-group-text rounded-0 g-bg-white g-color-gray-light-v1"><i
                         className="fa fa-search"></i></span>
@@ -139,13 +140,14 @@ const HomePage = () => {
 
             </div>
           </div>
+
           <div className="col-lg-9">
             <ul className="nav nav-justified u-nav-v1-1 u-nav-primary g-brd-bottom--md g-brd-bottom-2 g-brd-primary g-mb-20"
                 role="tablist" data-target="nav-1-1-default-hor-left-underline" data-tabs-mobile-type="slide-up-down"
                 data-btn-classes="btn btn-md btn-block rounded-0 u-btn-outline-primary g-mb-20">
               <li className="nav-item">
                 <a className="nav-link g-py-10 active" data-toggle="tab" href="#nav-1-1-default-hor-left-underline--1"
-                   role="tab">Patient Details</a>
+                   role="tab">Details</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link g-py-10" data-toggle="tab" href="#nav-1-1-default-hor-left-underline--2"
@@ -157,7 +159,7 @@ const HomePage = () => {
               </li>
               <li className="nav-item">
                 <a className="nav-link g-py-10" data-toggle="tab" href="#nav-1-1-default-hor-left-underline--4"
-                   role="tab">Notification Settings</a>
+                   role="tab">Settings</a>
               </li>
             </ul>
 
@@ -214,6 +216,7 @@ const HomePage = () => {
 
                   <div className="row">
                     <div className="col-lg-12 g-mb-50 g-mb-0--lg">
+
                       <div className="form-group g-mb-20">
                         <small className="form-text g-font-size-default g-mt-10 text-right">160 characters remaining</small>
                         <div className="input-group g-brd-primary--focus">
@@ -226,7 +229,11 @@ const HomePage = () => {
                         </div>
                         <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="#!" >Schedule</a> | <a href="#!" >Add</a></small>
                       </div>
+
+                      <hr className="g-brd-gray-light-v4 g-my-20" />
+
                       <div className="form-group g-mb-20">
+                        <small className="form-text g-font-size-default g-mt-10 text-right">2 characters remaining</small>
                         <div className="input-group g-brd-primary--focus">
                           <textarea className="form-control form-control-md g-resize-none rounded-0" rows="4"
                                     placeholder="Ipsum Aenean Porta">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi aperiam, aut et excepturi facere iusto libero maxime molestiae nam numquam ratione similique vel, vero, voluptates. Laudantium nam possimus ullam.</textarea>
@@ -235,19 +242,25 @@ const HomePage = () => {
                                 className="fa fa-pencil"></i></span>
                           </div>
                         </div>
-                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="#!" >Scheduled for 11:30</a> | <a href="#!" >Remove</a></small>
+                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="#!" >Scheduled for 11:30</a> | <a href="#!" >Update</a> <a className='float-right' href="#!" >Remove</a></small>
                       </div>
+
+                      <hr className="g-brd-gray-light-v4 g-my-20" />
+
                       <div className="form-group g-mb-20">
                         <div className="input-group g-brd-primary--focus">
-                          <textarea className="form-control form-control-md g-resize-none rounded-0" rows="4"
-                                    placeholder="Ipsum Aenean Porta">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi aperiam, aut et excepturi facere iusto libero maxime molestiae nam numquam ratione similique vel, vero, voluptates. Laudantium nam possimus ullam.</textarea>
+                          <textarea className="form-control form-control-md g-resize-none rounded-0 disabled" rows="4"
+                                    placeholder="Ipsum Aenean Porta" disabled={true}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi aperiam, aut et excepturi facere iusto libero maxime molestiae nam numquam ratione similique vel, vero, voluptates. Laudantium nam possimus ullam.</textarea>
                           <div className="input-group-append">
                             <span className="input-group-text rounded-0 g-bg-white g-color-gray-light-v1"><i
                                 className="fa fa-pencil"></i></span>
                           </div>
                         </div>
-                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="#!" >Scheduled for 14:00 PM</a> | <a href="#!" >Remove</a></small>
+                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> Scheduled for 14:00 PM | <a href="#!" >Change</a> <a className='float-right' href="#!" >Remove</a></small>
                       </div>
+
+                      <hr className="g-brd-gray-light-v4 g-my-20" />
+
                     </div>
                   </div>
 
@@ -317,21 +330,100 @@ const HomePage = () => {
                       </td>
                     </tr>
 
+                    <tr>
+                      <td className="align-middle">
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores aut consequatur debitis dignissimos eos ex facilis fugiat iure nemo numquam officia pariatur, quisquam saepe sunt vel veniam vitae? Ipsum.</span>
+                      </td>
+                      <td className="align-middle">
+                        <a className="btn btn-block u-btn-primary g-rounded-50 g-py-5" href="#!">
+                          <i className="fa fa-check g-mr-5"></i> Received
+                        </a>
+                      </td>
+                      <td className="align-middle text-nowrap">
+                        <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 17, 2017</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 14:00</span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="align-middle">
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores aut consequatur debitis dignissimos eos ex facilis fugiat iure nemo numquam officia pariatur, quisquam saepe sunt vel veniam vitae? Ipsum.</span>
+                      </td>
+                      <td className="align-middle">
+                        <a className="btn btn-block u-btn-primary g-rounded-50 g-py-5" href="#!">
+                          <i className="fa fa-check g-mr-5"></i> Received
+                        </a>
+                      </td>
+                      <td className="align-middle text-nowrap">
+                        <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 18, 2017</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 11:30</span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="align-middle">
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores aut consequatur debitis dignissimos eos ex facilis fugiat iure nemo numquam officia pariatur, quisquam saepe sunt vel veniam vitae? Ipsum.</span>
+                      </td>
+                      <td className="align-middle">
+                        <a className="btn btn-block u-btn-red g-rounded-50 g-py-5" href="#!">
+                          <i className="fa fa-times g-mr-5"></i> Failed
+                        </a>
+                      </td>
+                      <td className="align-middle text-nowrap">
+                        <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 18, 2017</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 14:00</span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="align-middle">
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores aut consequatur debitis dignissimos eos ex facilis fugiat iure nemo numquam officia pariatur, quisquam saepe sunt vel veniam vitae? Ipsum.</span>
+                      </td>
+                      <td className="align-middle">
+                        <a className="btn btn-block u-btn-primary g-rounded-50 g-py-5" href="#!">
+                          <i className="fa fa-check g-mr-5"></i> Received
+                        </a>
+                      </td>
+                      <td className="align-middle text-nowrap">
+                        <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 19, 2017</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 11:30</span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="align-middle">
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci dolorum eius ipsam iste, molestias obcaecati perspiciatis quae soluta tenetur unde ut voluptatem! Aliquam eligendi error est fuga hic odit, unde!</span>
+                      </td>
+
+                      <td className="align-middle">
+                        <a className="btn btn-block u-btn-orange g-rounded-50 g-py-5" href="#!">
+                          <i className="fa fa-info g-mr-5"></i> Sent
+                        </a>
+                      </td>
+                      <td className="align-middle text-nowrap">
+                        <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 19, 2017</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 14:00</span>
+                      </td>
+                    </tr>
+
                     </tbody>
                   </table>
+
+                  <hr className="g-brd-gray-light-v4 g-my-20" />
+
                 </div>
               </div>
 
               <div className="tab-pane fade" id="nav-1-1-default-hor-left-underline--4" role="tabpanel"
                    data-parent="#nav-1-1-default-hor-left-underline">
-                <h2 className="h4 g-font-weight-300">Manage Notifications</h2>
-                <p className="g-mb-25">Below are the notifications settings for this contact.</p>
+                <h2 className="h4 g-font-weight-300">Manage Settings</h2>
+                <p className="g-mb-25">Below are the settings you can change for this patient.</p>
 
                 <form>
 
                   <div className="form-group">
                     <label className="d-flex align-items-center justify-content-between">
-                      <span>SMS notification</span>
+                      <span>SMS notifications</span>
                       <div className="u-check">
                         <input className="g-hidden-xs-up g-pos-abs g-top-0 g-right-0" name="smsNotification"
                                type="checkbox" onChange={e => !e.target.checked} defaultChecked={true} />
@@ -342,6 +434,30 @@ const HomePage = () => {
                     </label>
                   </div>
 
+                  <hr className="g-brd-gray-light-v4 g-my-20" />
+
+
+                  <div className="form-group">
+                    <label className="d-flex align-items-center justify-content-between">
+                      <span>Mobile verification
+                        <span className="u-label u-label-warning g-ml-10 g-mb-15">Unverified</span>
+                      </span>
+                      <button type="button" className="btn btn-primary btn-sm rounded-0 g-mr-0 g-mb-0">Resend</button>
+                    </label>
+                  </div>
+
+                  <hr className="g-brd-gray-light-v4 g-my-20" />
+
+                  <div className="form-group">
+                    <label className="d-flex align-items-center justify-content-between g-mb-0">
+                      <span>Remove this person</span>
+                      <button type="button" className="btn btn-danger btn-sm rounded-0 g-mr-0 g-mb-0">Delete</button>
+                    </label>
+                    <small className="form-text text-muted g-font-size-12 g-mt-0">This action cannot be undone.
+                    </small>
+                  </div>
+
+                  <hr className="g-brd-gray-light-v4 g-mt-0 g-mb-20" />
                 </form>
               </div>
 
