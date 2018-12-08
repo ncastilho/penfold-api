@@ -15,7 +15,7 @@ const HomePage = () => {
                         <h4 className="h5 g-mb-0">John Doe</h4>
                       </div>
                       <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">john.doe@htmlstream.com</em>
-                      <em class="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 456 789059</em>
+                      <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 456 789059</em>
                     </div>
                   </div>
                 </figure>
@@ -125,24 +125,52 @@ const HomePage = () => {
                   </li>
                 </ul>
 
-                <div className="text-sm-right">
-                  <a className="btn u-btn-darkgray rounded-0 g-py-12 g-px-25 g-mr-10" href="#!">Cancel</a>
-                  <a className="btn u-btn-primary rounded-0 g-py-12 g-px-25" href="#!">Save Changes</a>
-                </div>
               </div>
 
               <div className="tab-pane fade" id="nav-1-1-default-hor-left-underline--2" role="tabpanel"
                    data-parent="#nav-1-1-default-hor-left-underline">
                 <h2 className="h4 g-font-weight-300">Manage Messages</h2>
-                <p className="g-mb-25">Add messages, change send time and so on.</p>
+                <p className="g-mb-5">Add messages, change send time and so on.</p>
 
                 <form>
 
-                  <hr className="g-brd-gray-light-v4 g-my-20" />
-
-                  <div className="text-sm-right">
-                    <a className="btn u-btn-darkgray rounded-0 g-py-12 g-px-25 g-mr-10" href="#!">Cancel</a>
-                    <a className="btn u-btn-primary rounded-0 g-py-12 g-px-25" href="#!">Save Changes</a>
+                  <div className="row">
+                    <div className="col-lg-12 g-mb-50 g-mb-0--lg">
+                      <div className="form-group g-mb-20">
+                        <small className="form-text g-font-size-default g-mt-10 text-right">160 characters remaining</small>
+                        <div className="input-group g-brd-primary--focus">
+                          <textarea className="form-control form-control-md g-resize-none rounded-0" rows="4"
+                                    placeholder="Ipsum Aenean Porta"></textarea>
+                          <div className="input-group-append">
+                            <span className="input-group-text rounded-0 g-bg-white g-color-gray-light-v1"><i
+                                className="fa fa-pencil"></i></span>
+                          </div>
+                        </div>
+                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="javascript:void(0)" >Schedule</a> | <a href="javascript:void(0)" >Add</a></small>
+                      </div>
+                      <div className="form-group g-mb-20">
+                        <div className="input-group g-brd-primary--focus">
+                          <textarea className="form-control form-control-md g-resize-none rounded-0" rows="4"
+                                    placeholder="Ipsum Aenean Porta">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi aperiam, aut et excepturi facere iusto libero maxime molestiae nam numquam ratione similique vel, vero, voluptates. Laudantium nam possimus ullam.</textarea>
+                          <div className="input-group-append">
+                            <span className="input-group-text rounded-0 g-bg-white g-color-gray-light-v1"><i
+                                className="fa fa-pencil"></i></span>
+                          </div>
+                        </div>
+                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="javascript:void(0)" >Scheduled for 11:30</a> | <a href="javascript:void(0)" >Remove</a></small>
+                      </div>
+                      <div className="form-group g-mb-20">
+                        <div className="input-group g-brd-primary--focus">
+                          <textarea className="form-control form-control-md g-resize-none rounded-0" rows="4"
+                                    placeholder="Ipsum Aenean Porta">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi aperiam, aut et excepturi facere iusto libero maxime molestiae nam numquam ratione similique vel, vero, voluptates. Laudantium nam possimus ullam.</textarea>
+                          <div className="input-group-append">
+                            <span className="input-group-text rounded-0 g-bg-white g-color-gray-light-v1"><i
+                                className="fa fa-pencil"></i></span>
+                          </div>
+                        </div>
+                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="javascript:void(0)" >Scheduled for 14:00 PM</a> | <a href="javascript:void(0)" >Remove</a></small>
+                      </div>
+                    </div>
                   </div>
 
                 </form>
@@ -170,12 +198,12 @@ const HomePage = () => {
                       </td>
                       <td className="align-middle">
                         <a className="btn btn-block u-btn-primary g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-arrows-v g-mr-5"></i> Received
+                          <i className="fa fa-check g-mr-5"></i> Received
                         </a>
                       </td>
                       <td className="align-middle text-nowrap">
                         <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 16, 2017</span>
-                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 11:49 PM</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 11:30</span>
                       </td>
                     </tr>
 
@@ -185,13 +213,13 @@ const HomePage = () => {
                       </td>
 
                       <td className="align-middle">
-                        <a className="btn btn-block u-btn-pink g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-level-up g-mr-5"></i> Failed
+                        <a className="btn btn-block u-btn-red g-rounded-50 g-py-5" href="#!">
+                          <i className="fa fa-times g-mr-5"></i> Failed
                         </a>
                       </td>
                       <td className="align-middle text-nowrap">
                         <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 16, 2017</span>
-                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 11:49 PM</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 14:00</span>
                       </td>
                     </tr>
 
@@ -201,13 +229,13 @@ const HomePage = () => {
                       </td>
 
                       <td className="align-middle">
-                        <a className="btn btn-block u-btn-cyan g-rounded-50 g-py-5" href="#!">
-                          <i className="fa fa-sort-amount-desc g-mr-5"></i> Sent
+                        <a className="btn btn-block u-btn-orange g-rounded-50 g-py-5" href="#!">
+                          <i className="fa fa-info g-mr-5"></i> Sent
                         </a>
                       </td>
                       <td className="align-middle text-nowrap">
-                        <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 16, 2017</span>
-                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 11:49 PM</span>
+                        <span className="d-block g-mb-5"><i className="icon-calendar g-mr-5"></i> July 17, 2017</span>
+                        <span className="d-block g-mb-5"><i className="icon-clock g-mr-5"></i> 11:30</span>
                       </td>
                     </tr>
 
@@ -228,19 +256,12 @@ const HomePage = () => {
                       <span>SMS notification</span>
                       <div className="u-check">
                         <input className="g-hidden-xs-up g-pos-abs g-top-0 g-right-0" name="smsNotification"
-                               type="checkbox" checked />
+                               type="checkbox" onChange={e => !e.target.checked} defaultChecked={true} />
                           <div className="u-check-icon-radio-v7">
                             <i className="d-inline-block"></i>
                           </div>
                       </div>
                     </label>
-                  </div>
-
-                  <hr className="g-brd-gray-light-v4 g-my-20" />
-
-                  <div className="text-sm-right">
-                    <a className="btn u-btn-darkgray rounded-0 g-py-12 g-px-25 g-mr-10" href="#!">Cancel</a>
-                    <a className="btn u-btn-primary rounded-0 g-py-12 g-px-25" href="#!">Save Changes</a>
                   </div>
 
                 </form>
