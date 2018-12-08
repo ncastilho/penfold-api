@@ -146,7 +146,7 @@ const HomePage = () => {
                                 className="fa fa-pencil"></i></span>
                           </div>
                         </div>
-                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="javascript:void(0)" >Schedule</a> | <a href="javascript:void(0)" >Add</a></small>
+                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="#!" >Schedule</a> | <a href="#!" >Add</a></small>
                       </div>
                       <div className="form-group g-mb-20">
                         <div className="input-group g-brd-primary--focus">
@@ -157,7 +157,7 @@ const HomePage = () => {
                                 className="fa fa-pencil"></i></span>
                           </div>
                         </div>
-                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="javascript:void(0)" >Scheduled for 11:30</a> | <a href="javascript:void(0)" >Remove</a></small>
+                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="#!" >Scheduled for 11:30</a> | <a href="#!" >Remove</a></small>
                       </div>
                       <div className="form-group g-mb-20">
                         <div className="input-group g-brd-primary--focus">
@@ -168,7 +168,7 @@ const HomePage = () => {
                                 className="fa fa-pencil"></i></span>
                           </div>
                         </div>
-                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="javascript:void(0)" >Scheduled for 14:00 PM</a> | <a href="javascript:void(0)" >Remove</a></small>
+                        <small className="form-text g-font-size-default g-mt-10"><i className="icon-clock g-mr-5"></i> <a href="#!" >Scheduled for 14:00 PM</a> | <a href="#!" >Remove</a></small>
                       </div>
                     </div>
                   </div>
