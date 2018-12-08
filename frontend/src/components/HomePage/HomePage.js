@@ -488,7 +488,7 @@ const HomePage = () => {
         <button type="button" className="close" onClick={() => window.Custombox.modal.close()}>
           <i className="hs-icon hs-icon-close"></i>
         </button>
-        <h4 className="g-mb-20">Add New Contact</h4>
+        <h4 className="g-mb-20">New Contact</h4>
 
         <ul className="list-unstyled g-mb-30">
 
@@ -548,6 +548,10 @@ const HomePage = () => {
               <hr className="g-brd-gray-light-v4 g-my-20" />
 
             </div>
+          </div>
+
+          <div className="text-sm-right">
+            <a className="btn u-btn-primary rounded-0 g-py-12 g-px-25" href="#!">Save</a>
           </div>
 
         </form>
