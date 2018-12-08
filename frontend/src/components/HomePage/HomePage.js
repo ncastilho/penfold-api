@@ -1,48 +1,6 @@
 import React from 'react';
 
 const HomePage = () => {
-  const contactList =
-    <div className="list-group list-group-border-0 g-mb-40">
-      <div className="shortcode-html">
-        <ul className="list-unstyled">
-          <li className="g-brd-around g-brd-gray-light-v4 g-mb-minus-1">
-            <div className="media">
-              <div className="media-body">
-                <figure className="u-block-hover u-shadow-v19 g-bg-white g-rounded-4 g-pa-15">
-                  <div className="d-flex justify-content-start">
-                    <div className="d-block">
-                      <div className="g-mb-5">
-                        <h4 className="h5 g-mb-0">John Doe</h4>
-                      </div>
-                      <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">john.doe@htmlstream.com</em>
-                      <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 456 789059</em>
-                    </div>
-                  </div>
-                </figure>
-              </div>
-            </div>
-          </li>
-          <li className="g-brd-around g-brd-gray-light-v4 g-mb-minus-1">
-            <div className="media">
-              <div className="media-body">
-                <figure className="u-block-hover u-shadow-v19 g-bg-white g-rounded-4 g-pa-15">
-                  <div className="d-flex justify-content-start">
-                    <div className="d-block">
-                      <div className="g-mb-5">
-                        <h4 className="h5 g-mb-0">Jane Doe</h4>
-                      </div>
-                      <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">jane.doe@htmlstream.com</em>
-                      <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 543768</em>
-                    </div>
-                  </div>
-                </figure>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>;
-
   return (
     <section className="g-min-height-80vh">
       <div className="container">
@@ -59,7 +17,121 @@ const HomePage = () => {
                 <input id="inputGroup1_1" className="form-control form-control-md rounded-0" type="text"  placeholder="Search..." />
               </div>
             </form>
-              { contactList }
+            <div className="list-group list-group-border-0 g-mb-40 g-max-height-70vh g-overflow-y-auto">
+
+              <a href="#!" className="list-group-item justify-content-between active">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-mb-0">John Doe</h4>
+                  </div>
+                  <em className="d-block g-font-style-normal g-font-size-13 g-mb-2">john.doe@htmlstream.com</em>
+                  <em className="d-block g-font-style-normal g-font-size-12">(+44) 456 789059</em>
+                </div>
+              </a>
+
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Jane Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">jane.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 543768</em>
+                </div>
+              </a>
+
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Katy Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">katy.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 639571</em>
+                </div>
+              </a>
+
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Zoe Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">zoe.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 095728</em>
+                </div>
+              </a>
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Zoe Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">nuno.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 983744</em>
+                </div>
+              </a>
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Zoe Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">niels.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 895290</em>
+                </div>
+              </a>
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Zoe Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">michael.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 885022</em>
+                </div>
+              </a>
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Zoe Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">ferguson.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 944278</em>
+                </div>
+              </a>
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Zoe Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">sven.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 001213</em>
+                </div>
+              </a>
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Zoe Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">santa.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 092232</em>
+                </div>
+              </a>
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Zoe Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">jesus.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 444578</em>
+                </div>
+              </a>
+              <a href="#!" className="list-group-item justify-content-between">
+                <div className="d-block">
+                  <div className="g-mb-5">
+                    <h4 className="h5 g-color-gray-dark-v5 g-mb-0">Zoe Doe</h4>
+                  </div>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-13 g-mb-2">toto.doe@htmlstream.com</em>
+                  <em className="d-block g-color-gray-dark-v5 g-font-style-normal g-font-size-12">(+44) 986 334211</em>
+                </div>
+              </a>
+
+            </div>
           </div>
           <div className="col-lg-9">
             <ul className="nav nav-justified u-nav-v1-1 u-nav-primary g-brd-bottom--md g-brd-bottom-2 g-brd-primary g-mb-20"
