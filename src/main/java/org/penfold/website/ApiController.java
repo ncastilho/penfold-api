@@ -8,59 +8,69 @@ import java.util.List;
 @RestController
 public class ApiController {
 
-    private final ApiService apiService;
+    private final ContactService contactService;
 
-    public ApiController(ApiService apiService) {
-        this.apiService = apiService;
+    public ApiController(ContactService contactService) {
+        this.contactService = contactService;
     }
 
     @PostMapping("/contacts")
     public ContactEntity addContact(@Valid @RequestBody Contact contact) {
-        return apiService.createContact(contact);
+        return contactService.createContact(contact);
     }
 
     @GetMapping("/contacts")
     public List<ContactEntity> getAllContacts() {
-        return apiService.getAllContacts();
+        return contactService.getAllContacts();
     }
 
     @GetMapping("/contacts/{id}")
     public ContactEntity getContact(@PathVariable String id) {
-        return apiService.getContact(id);
+        return contactService.getContact(id);
     }
 
     @PutMapping("/contacts/{id}")
     public ContactEntity updateContact(@PathVariable String id, @Valid @RequestBody Contact contact) {
-        return apiService.updateContact(id, contact);
+        return contactService.updateContact(id, contact);
     }
 
     @DeleteMapping("/contacts/{id}")
     public void deleteContact(@PathVariable String id) {
-        apiService.deleteContact(id);
+        contactService.deleteContact(id);
     }
 
     @PostMapping("/contacts/{id}/messages")
     public MessageEntity addMessage(@PathVariable String id, @Valid @RequestBody Message message) {
-        return apiService.createMessage(id, message);
+        return contactService.createMessage(id, message);
     }
 
     @GetMapping("/contacts/{id}/messages")
     public List<MessageEntity> getAllMessages(@PathVariable String id) {
-        return apiService.getAllMessages(id);
+        return contactService.getAllMessages(id);
+    }
+
+    @GetMapping("/contacts/{id}/history")
+    public List<HistoryEntity> getHistory(@PathVariable String id) {
+        return contactService.getHistory(id);
+    }
+
+    @GetMapping("/contacts/{id}/preferences")
+    public PreferencesEntity getPreferences(@PathVariable String id) {
+        return contactService.getPreferences(id);
     }
 
     @GetMapping("/messages/{id}")
     public MessageEntity getMessage(@PathVariable String id) {
-        return apiService.getMessage(id);
+        return contactService.getMessage(id);
     }
 
     @PutMapping("/messages/{id}")
     public MessageEntity updateMessage(@PathVariable String id, @Valid @RequestBody Message message) {
-        return apiService.updateMessage(id, message);
+        return contactService.updateMessage(id, message);
     }
 
     @DeleteMapping("/messages/{id}")
     public void deleteMessage(@PathVariable String id) {
-        apiService.deleteMessage(id);
+        contactService.deleteMessage(id);
     }
 }

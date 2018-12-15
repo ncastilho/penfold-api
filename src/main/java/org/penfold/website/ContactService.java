@@ -8,20 +8,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ApiService {
+public class ContactService {
 
     private final ContactEntityRepository contactEntityRepository;
     private final MessageEntityRepository messageEntityRepository;
+    private final HistoryEntityRepository historyEntityRepository;
+    private final PreferencesRepository preferencesEntityRepository;
 
-    public ApiService(ContactEntityRepository contactEntityRepository, MessageEntityRepository messageEntityRepository) {
+    public ContactService(ContactEntityRepository contactEntityRepository, MessageEntityRepository messageEntityRepository, HistoryEntityRepository historyEntityRepository, PreferencesRepository preferencesEntityRepository) {
         this.contactEntityRepository = contactEntityRepository;
         this.messageEntityRepository = messageEntityRepository;
+        this.historyEntityRepository = historyEntityRepository;
+        this.preferencesEntityRepository = preferencesEntityRepository;
     }
 
     public ContactEntity createContact(Contact contact) {
-        ContactEntity contactEntity = convertToContactEntity(contact);
-
-        ContactEntity result = contactEntityRepository.save(contactEntity);
+        ContactEntity contactEntity = contactEntityRepository.save(convertToContactEntity(contact));
 
         List<MessageEntity> messageEntities = contact.getMessages().stream()
                 .map((message) -> convertToMessageEntity(contactEntity, message))
@@ -29,7 +31,15 @@ public class ApiService {
 
         messageEntityRepository.saveAll(messageEntities);
 
-        return result;
+        PreferencesEntity preferencesEntity = PreferencesEntity.builder()
+                .contactId(contactEntity.getId())
+                .mobileVerified(false)
+                .smsEnabled(true)
+                .build();
+
+        preferencesEntityRepository.save(preferencesEntity);
+
+        return contactEntity;
     }
 
     public ContactEntity getContact(String contactId) {
@@ -41,11 +51,19 @@ public class ApiService {
     }
 
     public void deleteContact(String contactId) {
+        messageEntityRepository.deleteAllByContactId(contactId);
+        preferencesEntityRepository.deleteAllByContactId(contactId);
         contactEntityRepository.deleteById(contactId);
     }
 
     public ContactEntity updateContact(String contactId, Contact contact) {
         ContactEntity contactEntity = getContact(contactId);
+
+        if(!contact.getMobile().equals(contactEntity.getMobile())) {
+            PreferencesEntity preferencesEntity = preferencesEntityRepository.findByContactId(contactId);
+            preferencesEntity.setMobileVerified(false);
+            preferencesEntityRepository.save(preferencesEntity);
+        }
 
         BeanUtils.copyProperties(contact, contactEntity);
 
@@ -78,6 +96,34 @@ public class ApiService {
         BeanUtils.copyProperties(message, messageEntity);
 
         return messageEntityRepository.save(messageEntity);
+    }
+
+    public List<HistoryEntity> getHistory(String contactId) {
+        ContactEntity contactEntity = getContact(contactId);
+
+        return Lists.newArrayList(historyEntityRepository.findAllByContactId(contactEntity.getId()));
+    }
+
+    public PreferencesEntity getPreferences(String contactId) {
+        ContactEntity contactEntity = getContact(contactId);
+
+        return preferencesEntityRepository.findByContactId(contactEntity.getId());
+    }
+
+    public PreferencesEntity toggleSmsEnabled(String contactId) {
+        PreferencesEntity preferencesEntity = getPreferences(contactId);
+
+        preferencesEntity.setSmsEnabled(!preferencesEntity.isSmsEnabled());
+
+        return preferencesEntityRepository.save(preferencesEntity);
+    }
+
+    public PreferencesEntity verifyMobile(String contactId) {
+        PreferencesEntity preferencesEntity = getPreferences(contactId);
+
+        preferencesEntity.setMobileVerified(true);
+
+        return preferencesEntityRepository.save(preferencesEntity);
     }
 
     private ContactEntity convertToContactEntity(Contact contact) {

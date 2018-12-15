@@ -8,10 +8,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Builder
 @Document
-public class ContactEntity {
+public class PreferencesEntity {
     @Id
     private String id;
-    private String name;
-    private String email;
-    private String mobile;
+    private String contactId;
+    private boolean mobileVerified;
+    private boolean smsEnabled;
 }
