@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PreferencesEntityRepository extends PagingAndSortingRepository<PreferencesEntity, String> {
     PreferencesEntity findByContactId(String contactId);
+
     void deleteAllByContactId(String contactId);
 }

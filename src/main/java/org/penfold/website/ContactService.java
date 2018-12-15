@@ -126,6 +126,18 @@ public class ContactService {
         return preferencesEntityRepository.save(preferencesEntity);
     }
 
+    public void markMessageAsReceived(String callbackToken) {
+        HistoryEntity historyEntity = historyEntityRepository.findByCallbackToken(callbackToken);
+        historyEntity.setReceivedStatus();
+        historyEntityRepository.save(historyEntity);
+    }
+
+    public void markMessageAsFailed(String callbackToken) {
+        HistoryEntity historyEntity = historyEntityRepository.findByCallbackToken(callbackToken);
+        historyEntity.setFailedStatus();
+        historyEntityRepository.save(historyEntity);
+    }
+
     private ContactEntity convertToContactEntity(Contact contact) {
         return ContactEntity.builder()
                 .name(contact.getName())
