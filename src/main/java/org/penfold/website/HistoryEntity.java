@@ -1,20 +1,21 @@
 package org.penfold.website;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 @Data
+@Builder
 @Document
 public class HistoryEntity {
     public enum Status {
-        SENT, RECEIVED, FAILED
+        UNKNOWN, SENT, RECEIVED, FAILED
     }
 
     @Id
@@ -23,7 +24,8 @@ public class HistoryEntity {
     private String mobile;
     private String content;
     private String scheduledTime;
-    private List<HistoryEvent> events = new ArrayList<>();
+    private String callbackToken;
+    private List<HistoryEvent> events;
 
     @Data
     @AllArgsConstructor
@@ -33,7 +35,7 @@ public class HistoryEntity {
     }
 
     public void setSentStatus() {
-        if(getStatus() == Status.SENT || getStatus() == Status.RECEIVED) {
+        if(getStatus() != Status.UNKNOWN && getStatus() != Status.FAILED) {
             throw new IllegalStateException();
         }
 
@@ -41,7 +43,7 @@ public class HistoryEntity {
     }
 
     public void setReceivedStatus() {
-        if(getStatus() == Status.RECEIVED) {
+        if(getStatus() == Status.UNKNOWN || getStatus() == Status.RECEIVED) {
             throw new IllegalStateException();
         }
 
@@ -67,10 +69,14 @@ public class HistoryEntity {
     private HistoryEvent getLastHistoryEvent() {
         return events.stream()
                 .max(Comparator.comparing(HistoryEvent::getTimestamp))
-                .orElseThrow(() -> new IllegalStateException());
+                .orElse(createHistoryEvent(Status.UNKNOWN, LocalDateTime.now()));
     }
 
     private void setStatus(Status status) {
-        events.add(new HistoryEvent(status, LocalDateTime.now()));
+        events.add(createHistoryEvent(status, LocalDateTime.now()));
+    }
+
+    private HistoryEvent createHistoryEvent(Status status, LocalDateTime timestamp) {
+        return new HistoryEvent(status, timestamp);
     }
 }

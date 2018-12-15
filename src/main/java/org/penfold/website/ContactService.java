@@ -13,9 +13,9 @@ public class ContactService {
     private final ContactEntityRepository contactEntityRepository;
     private final MessageEntityRepository messageEntityRepository;
     private final HistoryEntityRepository historyEntityRepository;
-    private final PreferencesRepository preferencesEntityRepository;
+    private final PreferencesEntityRepository preferencesEntityRepository;
 
-    public ContactService(ContactEntityRepository contactEntityRepository, MessageEntityRepository messageEntityRepository, HistoryEntityRepository historyEntityRepository, PreferencesRepository preferencesEntityRepository) {
+    public ContactService(ContactEntityRepository contactEntityRepository, MessageEntityRepository messageEntityRepository, HistoryEntityRepository historyEntityRepository, PreferencesEntityRepository preferencesEntityRepository) {
         this.contactEntityRepository = contactEntityRepository;
         this.messageEntityRepository = messageEntityRepository;
         this.historyEntityRepository = historyEntityRepository;
