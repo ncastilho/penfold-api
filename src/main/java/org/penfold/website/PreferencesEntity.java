@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Builder
-@Document
+@Document("preferences")
 public class PreferencesEntity {
     @Id
     private String id;

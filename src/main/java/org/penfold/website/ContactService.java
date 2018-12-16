@@ -126,15 +126,9 @@ public class ContactService {
         return preferencesEntityRepository.save(preferencesEntity);
     }
 
-    public void markMessageAsReceived(String callbackToken) {
-        HistoryEntity historyEntity = historyEntityRepository.findByCallbackToken(callbackToken);
-        historyEntity.setReceivedStatus();
-        historyEntityRepository.save(historyEntity);
-    }
-
-    public void markMessageAsFailed(String callbackToken) {
-        HistoryEntity historyEntity = historyEntityRepository.findByCallbackToken(callbackToken);
-        historyEntity.setFailedStatus();
+    public void updateEventLog(Callback callback) {
+        HistoryEntity historyEntity = historyEntityRepository.findByMessageSid(callback.getMessageSid());
+        historyEntity.setStatus(MessageStatus.fromString(callback.getMessageStatus()));
         historyEntityRepository.save(historyEntity);
     }
 

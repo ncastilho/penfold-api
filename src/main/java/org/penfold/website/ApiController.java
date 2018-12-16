@@ -1,5 +1,6 @@
 package org.penfold.website;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -73,4 +74,11 @@ public class ApiController {
     public void deleteMessage(@PathVariable String id) {
         contactService.deleteMessage(id);
     }
+
+    @PostMapping(value = "/callback/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public void callback(@PathVariable String id, @Valid @ModelAttribute Callback callback) {
+        //TODO id, sid, token, from, to, error msg / code verification / validation
+        contactService.updateEventLog(callback);
+    }
+
 }

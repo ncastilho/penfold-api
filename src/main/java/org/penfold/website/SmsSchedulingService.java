@@ -31,7 +31,7 @@ public class SmsSchedulingService {
         int hour = LocalDateTime.now().getHour();
         int minutes = LocalDateTime.now().getMinute();
 
-        Iterable<MessageEntity> messageEntities = messageEntityRepository.findAllByScheduledTime(String.format("%s:%s", hour, minutes));
+        Iterable<MessageEntity> messageEntities = messageEntityRepository.findAllByScheduledTime(String.format("%02d:%02d", hour, minutes));
 
         messageEntities.forEach((message) -> sendSms(message));
     }
@@ -47,7 +47,7 @@ public class SmsSchedulingService {
         Optional<ContactEntity> contactEntity = contactEntityRepository.findById(message.getContactId());
 
         if (!contactEntity.isPresent()) {
-            throw new IllegalStateException(String.format("Found an orphan message: [%s]", message.getId()));
+            throw new IllegalStateException(String.format("Found an orphan message: [id=%s]", message.getId()));
         }
 
         HistoryEntity historyEntity = HistoryEntity.builder()
@@ -59,11 +59,14 @@ public class SmsSchedulingService {
                 .build();
 
         try {
-            String callbackToken = smsGateway.sendMessage(contactEntity.get().getMobile(), message.getContent());
-            historyEntity.setCallbackToken(callbackToken);
-            historyEntity.setSentStatus();
+            String messageSid = smsGateway.sendMessage(
+                    message.getId(),
+                    contactEntity.get().getMobile(),
+                    message.getContent());
+            historyEntity.setMessageSid(messageSid);
+            historyEntity.setStatus(MessageStatus.FORWARDED);
         } catch (Exception ex) {
-            historyEntity.setFailedStatus();
+            historyEntity.setStatus(MessageStatus.FAILED);
         } finally {
             historyEntityRepository.save(historyEntity);
         }

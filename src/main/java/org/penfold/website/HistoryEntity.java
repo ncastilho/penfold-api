@@ -6,77 +6,64 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 
 @Data
 @Builder
-@Document
+@Document("history")
 public class HistoryEntity {
-    public enum Status {
-        UNKNOWN, SENT, RECEIVED, FAILED
-    }
 
     @Id
     private String id;
     private String contactId;
+    private String messageId;
     private String mobile;
     private String content;
     private String scheduledTime;
-    private String callbackToken;
-    private List<HistoryEvent> events;
+    private String messageSid;
+    private List<EventLog> events;
 
     @Data
     @AllArgsConstructor
-    private class HistoryEvent {
-        private Status status;
+    public static class EventLog {
+        private MessageStatus messageStatus;
         private LocalDateTime timestamp;
-    }
 
-    public void setSentStatus() {
-        if(getStatus() != Status.UNKNOWN && getStatus() != Status.FAILED) {
-            throw new IllegalStateException();
+        public static EventLog create(MessageStatus messageStatus) {
+            return new EventLog(messageStatus, LocalDateTime.now());
         }
-
-        setStatus(Status.SENT);
     }
 
-    public void setReceivedStatus() {
-        if(getStatus() == Status.UNKNOWN || getStatus() == Status.RECEIVED) {
-            throw new IllegalStateException();
-        }
-
-        setStatus(Status.RECEIVED);
+    public MessageStatus getStatus() {
+        return getLastEventLog().getMessageStatus();
     }
 
-    public void setFailedStatus() {
-        if(getStatus() == Status.RECEIVED) {
-            throw new IllegalStateException();
-        }
-
-        setStatus(Status.FAILED);
+    public LocalDate getDate() {
+        return getLastEventLog().getTimestamp().toLocalDate();
     }
 
-    public Status getStatus() {
-        return getLastHistoryEvent().getStatus();
+    public LocalTime getTime() {
+        return getLastEventLog().getTimestamp().toLocalTime();
     }
 
-    public LocalDateTime getTimestamp() {
-        return getLastHistoryEvent().getTimestamp();
-    }
-
-    private HistoryEvent getLastHistoryEvent() {
+    private EventLog getLastEventLog() {
         return events.stream()
-                .max(Comparator.comparing(HistoryEvent::getTimestamp))
-                .orElse(createHistoryEvent(Status.UNKNOWN, LocalDateTime.now()));
+                .max(Comparator.comparing(EventLog::getTimestamp))
+                .orElse(EventLog.create(MessageStatus.INITIAL));
     }
 
-    private void setStatus(Status status) {
-        events.add(createHistoryEvent(status, LocalDateTime.now()));
+    public void setStatus(MessageStatus messageStatus) {
+        MessageStatus newStatus = getStatus().dispatch(messageStatus);
+        addEventLog(EventLog.create(newStatus));
     }
 
-    private HistoryEvent createHistoryEvent(Status status, LocalDateTime timestamp) {
-        return new HistoryEvent(status, timestamp);
+    private void addEventLog(EventLog eventLog) {
+        events.add(eventLog);
     }
+
+
 }
