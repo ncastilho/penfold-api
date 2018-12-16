@@ -118,9 +118,9 @@ public class ContactService {
         return preferencesEntityRepository.save(preferencesEntity);
     }
 
-    public void updateEventLog(Callback callback) {
-        HistoryEntity historyEntity = historyEntityRepository.findByMessageSid(callback.getMessageSid());
-        historyEntity.setState(MessageState.fromString(callback.getMessageStatus()));
+    public void updateMessageHistory(String messageId, CallbackEvent callbackEvent) {
+        HistoryEntity historyEntity = historyEntityRepository.findByMessageSid(callbackEvent.getMessageSid());
+        historyEntity.transitionTo(callbackEvent.getMessageState(), callbackEvent.getMessage());
         historyEntityRepository.save(historyEntity);
     }
 

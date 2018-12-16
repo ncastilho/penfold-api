@@ -76,9 +76,9 @@ public class ApiController {
     }
 
     @PostMapping(value = "/callback/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public void callback(@PathVariable String id, @Valid @ModelAttribute Callback callback) {
+    public void callback(@PathVariable String id, @Valid @ModelAttribute CallbackEvent callbackEvent) {
         //TODO id, sid, token, from, to, error msg / code verification / validation
-        contactService.updateEventLog(callback);
+        contactService.updateMessageHistory(id, callbackEvent);
     }
 
 }

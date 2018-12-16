@@ -1,5 +1,6 @@
 package org.penfold.website;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,22 +30,25 @@ public class HistoryEntity {
     @Data
     @AllArgsConstructor
     public static class EventLog {
-        private MessageState messageState;
+        private State state;
+        private String message;
         private LocalDateTime timestamp;
 
-        public static EventLog create(MessageState messageState) {
-            return new EventLog(messageState, LocalDateTime.now());
+        public static EventLog create(State state, String message) {
+            return new EventLog(state, message, LocalDateTime.now());
         }
     }
 
-    public MessageState getState() {
-        return getLastEventLog().getMessageState();
+    public State getState() {
+        return getLastEventLog().getState();
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     public LocalDate getDate() {
         return getLastEventLog().getTimestamp().toLocalDate();
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     public LocalTime getTime() {
         return getLastEventLog().getTimestamp().toLocalTime();
     }
@@ -52,17 +56,15 @@ public class HistoryEntity {
     private EventLog getLastEventLog() {
         return events.stream()
                 .max(Comparator.comparing(EventLog::getTimestamp))
-                .orElse(EventLog.create(MessageState.INITIAL));
+                .orElse(EventLog.create(State.INITIAL, null));
     }
 
-    public void setState(MessageState messageState) {
-        MessageState newState = getState().transitionTo(messageState);
-        addEventLog(EventLog.create(newState));
+    public void transitionTo(State state, String message) {
+        State newState = getState().validateState(state);
+        addEventLog(EventLog.create(newState, message));
     }
 
     private void addEventLog(EventLog eventLog) {
         events.add(eventLog);
     }
-
-
 }

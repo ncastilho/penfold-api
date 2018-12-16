@@ -1,7 +1,6 @@
 package org.penfold.website;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +35,7 @@ public class SmsSchedulingService {
         String scheduledTime = String.format("%02d:%02d", hour, minutes);
         Iterable<MessageEntity> messageEntities = messageEntityRepository.findAllByScheduledTime(scheduledTime);
 
-        messageEntities.forEach((message) -> sendSms(message));
+        messageEntities.forEach(this::sendSms);
     }
 
     private void sendSms(MessageEntity message) {
@@ -46,7 +45,7 @@ public class SmsSchedulingService {
         boolean isMobileVerified = preferences.isMobileVerified();
 
         if (!isSmsEnabled || !isMobileVerified) {
-            log.warn("Cannot send message: [id={}]. Sms is disabled or mobile is not verified: [isSmsEnabled={}, mobileVerified={}]", message.getId(), isSmsEnabled, isMobileVerified);
+            log.warn("Cannot send message. Sms is disabled or mobile is not verified: [id={}, isSmsEnabled={}, mobileVerified={}]", message.getId(), isSmsEnabled, isMobileVerified);
             return;
         }
 
@@ -60,10 +59,10 @@ public class SmsSchedulingService {
                     message.getContent());
 
             history.setMessageSid(messageSid);
-            history.setState(MessageState.FORWARDED);
+            history.transitionTo(State.FORWARDED, String.format("Message has been forwarded: [sid=%s]", messageSid));
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
-            history.setState(MessageState.FAILED);
+            history.transitionTo(State.FAILED, ex.getMessage());
         } finally {
             historyEntityRepository.save(history);
         }
@@ -79,7 +78,6 @@ public class SmsSchedulingService {
         return preferencesEntity;
     }
 
-    @NotNull
     private ContactEntity getContactEntity(MessageEntity message) {
         Optional<ContactEntity> contact = contactEntityRepository.findById(message.getContactId());
 
