@@ -1,6 +1,7 @@
 package org.penfold.website;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -28,48 +29,76 @@ public class SmsSchedulingService {
 
     @Scheduled(cron = "0 ${schedule.minutes} * * * ?")
     private void sendScheduledMessages() {
-        int hour = LocalDateTime.now().getHour();
-        int minutes = LocalDateTime.now().getMinute();
+        final LocalDateTime now = LocalDateTime.now();
+        int hour = now.getHour();
+        int minutes = now.getMinute();
 
-        Iterable<MessageEntity> messageEntities = messageEntityRepository.findAllByScheduledTime(String.format("%02d:%02d", hour, minutes));
+        String scheduledTime = String.format("%02d:%02d", hour, minutes);
+        Iterable<MessageEntity> messageEntities = messageEntityRepository.findAllByScheduledTime(scheduledTime);
 
         messageEntities.forEach((message) -> sendSms(message));
     }
 
     private void sendSms(MessageEntity message) {
-        PreferencesEntity preferencesEntity = preferencesEntityRepository.findByContactId(message.getContactId());
+        PreferencesEntity preferences = getPreferencesEntity(message);
 
-        if (!preferencesEntity.isSmsEnabled() || !preferencesEntity.isMobileVerified()) {
-            log.warn("Cannot send message: [id={}]. Sms is disabled or mobile is not verified: [smsEnabled={}, mobileVerified={}]", message.getId(), preferencesEntity.isSmsEnabled(), preferencesEntity.isMobileVerified());
+        boolean isSmsEnabled = preferences.isSmsEnabled();
+        boolean isMobileVerified = preferences.isMobileVerified();
+
+        if (!isSmsEnabled || !isMobileVerified) {
+            log.warn("Cannot send message: [id={}]. Sms is disabled or mobile is not verified: [isSmsEnabled={}, mobileVerified={}]", message.getId(), isSmsEnabled, isMobileVerified);
             return;
         }
 
-        Optional<ContactEntity> contactEntity = contactEntityRepository.findById(message.getContactId());
-
-        if (!contactEntity.isPresent()) {
-            throw new IllegalStateException(String.format("Found an orphan message: [id=%s]", message.getId()));
-        }
-
-        HistoryEntity historyEntity = HistoryEntity.builder()
-                .contactId(message.getContactId())
-                .mobile(contactEntity.get().getMobile())
-                .content(message.getContent())
-                .scheduledTime(message.getScheduledTime())
-                .events(new ArrayList<>())
-                .build();
+        ContactEntity contact = getContactEntity(message);
+        HistoryEntity history = createHistoryEntity(message, contact);
 
         try {
             String messageSid = smsGateway.sendMessage(
                     message.getId(),
-                    contactEntity.get().getMobile(),
+                    contact.getMobile(),
                     message.getContent());
-            historyEntity.setMessageSid(messageSid);
-            historyEntity.setStatus(MessageStatus.FORWARDED);
+
+            history.setMessageSid(messageSid);
+            history.setState(MessageState.FORWARDED);
         } catch (Exception ex) {
-            historyEntity.setStatus(MessageStatus.FAILED);
+            log.error(ex.getMessage(), ex);
+            history.setState(MessageState.FAILED);
         } finally {
-            historyEntityRepository.save(historyEntity);
+            historyEntityRepository.save(history);
         }
+    }
+
+    private PreferencesEntity getPreferencesEntity(MessageEntity message) {
+        PreferencesEntity preferencesEntity = preferencesEntityRepository.findByContactId(message.getContactId());
+
+        if (preferencesEntity == null) {
+            throw new IllegalStateException(String.format("Couldn't find contact preferences for message: [id=%s]", message.getId()));
+        }
+
+        return preferencesEntity;
+    }
+
+    @NotNull
+    private ContactEntity getContactEntity(MessageEntity message) {
+        Optional<ContactEntity> contact = contactEntityRepository.findById(message.getContactId());
+
+        if (!contact.isPresent()) {
+            throw new IllegalStateException(String.format("Found an orphan message: [id=%s]", message.getId()));
+        }
+
+        return contact.get();
+    }
+
+    private HistoryEntity createHistoryEntity(MessageEntity message, ContactEntity contact) {
+        return HistoryEntity.builder()
+                .messageId(message.getId())
+                .contactId(message.getContactId())
+                .mobile(contact.getMobile())
+                .content(message.getContent())
+                .scheduledTime(message.getScheduledTime())
+                .events(new ArrayList<>())
+                .build();
     }
 
 }

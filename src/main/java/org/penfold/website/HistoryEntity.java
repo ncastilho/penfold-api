@@ -16,7 +16,6 @@ import java.util.List;
 @Builder
 @Document("history")
 public class HistoryEntity {
-
     @Id
     private String id;
     private String contactId;
@@ -30,16 +29,16 @@ public class HistoryEntity {
     @Data
     @AllArgsConstructor
     public static class EventLog {
-        private MessageStatus messageStatus;
+        private MessageState messageState;
         private LocalDateTime timestamp;
 
-        public static EventLog create(MessageStatus messageStatus) {
-            return new EventLog(messageStatus, LocalDateTime.now());
+        public static EventLog create(MessageState messageState) {
+            return new EventLog(messageState, LocalDateTime.now());
         }
     }
 
-    public MessageStatus getStatus() {
-        return getLastEventLog().getMessageStatus();
+    public MessageState getState() {
+        return getLastEventLog().getMessageState();
     }
 
     public LocalDate getDate() {
@@ -53,12 +52,12 @@ public class HistoryEntity {
     private EventLog getLastEventLog() {
         return events.stream()
                 .max(Comparator.comparing(EventLog::getTimestamp))
-                .orElse(EventLog.create(MessageStatus.INITIAL));
+                .orElse(EventLog.create(MessageState.INITIAL));
     }
 
-    public void setStatus(MessageStatus messageStatus) {
-        MessageStatus newStatus = getStatus().dispatch(messageStatus);
-        addEventLog(EventLog.create(newStatus));
+    public void setState(MessageState messageState) {
+        MessageState newState = getState().transitionTo(messageState);
+        addEventLog(EventLog.create(newState));
     }
 
     private void addEventLog(EventLog eventLog) {

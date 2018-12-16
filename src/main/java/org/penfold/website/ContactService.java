@@ -43,7 +43,7 @@ public class ContactService {
     }
 
     public ContactEntity getContact(String contactId) {
-        return contactEntityRepository.findById(contactId).orElseThrow(() -> new ContactNotFoundException(contactId));
+        return contactEntityRepository.findById(contactId).orElseThrow(() -> new NotFoundException(contactId));
     }
 
     public List<ContactEntity> getAllContacts() {
@@ -77,7 +77,7 @@ public class ContactService {
     }
 
     public MessageEntity getMessage(String messageId) {
-        return messageEntityRepository.findById(messageId).orElseThrow(() -> new ContactNotFoundException(messageId));
+        return messageEntityRepository.findById(messageId).orElseThrow(() -> new NotFoundException(messageId));
     }
 
     public List<MessageEntity> getAllMessages(String contactId) {
@@ -118,17 +118,9 @@ public class ContactService {
         return preferencesEntityRepository.save(preferencesEntity);
     }
 
-    public PreferencesEntity verifyMobile(String contactId) {
-        PreferencesEntity preferencesEntity = getPreferences(contactId);
-
-        preferencesEntity.setMobileVerified(true);
-
-        return preferencesEntityRepository.save(preferencesEntity);
-    }
-
     public void updateEventLog(Callback callback) {
         HistoryEntity historyEntity = historyEntityRepository.findByMessageSid(callback.getMessageSid());
-        historyEntity.setStatus(MessageStatus.fromString(callback.getMessageStatus()));
+        historyEntity.setState(MessageState.fromString(callback.getMessageStatus()));
         historyEntityRepository.save(historyEntity);
     }
 
