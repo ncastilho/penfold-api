@@ -13,24 +13,24 @@ public class SmsGateway {
 
     private final String accountSid;
     private final String authToken;
-    private final String fromPhoneNumber;
+    private final String fromNumber;
     private final String callbackHost;
 
     public SmsGateway(
             @Value("${twilio.account-sid}") String accountSid,
             @Value("${twilio.auth-token}") String authToken,
-            @Value("${twilio.from-phone-number}") String fromPhoneNumber,
+            @Value("${twilio.from-number}") String fromNumber,
             @Value("${twilio.callback-host}") String callbackHost) {
         this.accountSid = accountSid;
         this.authToken = authToken;
-        this.fromPhoneNumber = fromPhoneNumber;
+        this.fromNumber = fromNumber;
         this.callbackHost = callbackHost;
     }
 
-    public String sendMessage(String messageId, String toPhoneNumber, String body) {
+    public String sendMessage(String messageId, String toNumber, String body) {
         Twilio.init(accountSid, authToken);
 
-        Message message = Message.creator(new PhoneNumber(toPhoneNumber), new PhoneNumber(fromPhoneNumber), body)
+        Message message = Message.creator(new PhoneNumber(toNumber), new PhoneNumber(fromNumber), body)
                 .setStatusCallback(createStatusCallbackURI(messageId))
                 .create();
 
