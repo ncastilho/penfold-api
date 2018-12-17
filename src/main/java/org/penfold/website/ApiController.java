@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class ApiController {
 
     private final ContactService contactService;

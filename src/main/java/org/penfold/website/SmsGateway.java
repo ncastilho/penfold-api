@@ -1,7 +1,6 @@
 package org.penfold.website;
 
 import com.twilio.Twilio;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.twilio.rest.api.v2010.account.Message;
@@ -15,20 +14,17 @@ public class SmsGateway {
     private final String accountSid;
     private final String authToken;
     private final String fromPhoneNumber;
-    private final String contextPath;
     private final String callbackHost;
 
     public SmsGateway(
             @Value("${twilio.account-sid}") String accountSid,
             @Value("${twilio.auth-token}") String authToken,
             @Value("${twilio.from-phone-number}") String fromPhoneNumber,
-            @Value("${twilio.callback-host}") String callbackHost,
-            @Value("${server.servlet.context-path}") String contextPath) {
+            @Value("${twilio.callback-host}") String callbackHost) {
         this.accountSid = accountSid;
         this.authToken = authToken;
         this.fromPhoneNumber = fromPhoneNumber;
         this.callbackHost = callbackHost;
-        this.contextPath = contextPath;
     }
 
     public String sendMessage(String messageId, String toPhoneNumber, String body) {
@@ -41,9 +37,8 @@ public class SmsGateway {
         return message.getSid();
     }
 
-    @NotNull
     private URI createStatusCallbackURI(String messageId) {
-        String uri = String.format("%s%s/callback/%s", callbackHost, contextPath, messageId);
+        String uri = String.format("%s%s/api/callback/%s", callbackHost, messageId);
         return URI.create(uri);
     }
 }
