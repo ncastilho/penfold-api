@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "${cors.origins}")
 public class ApiController {
 
     private final ContactService contactService;
