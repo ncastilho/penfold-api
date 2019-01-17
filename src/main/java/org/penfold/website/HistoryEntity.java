@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -16,9 +15,8 @@ import java.util.List;
 @Data
 @Builder
 @Document("history")
-public class HistoryEntity {
-    @Id
-    private String id;
+public class HistoryEntity extends DomainEntity {
+
     private String contactId;
     private String messageId;
     private String mobile;

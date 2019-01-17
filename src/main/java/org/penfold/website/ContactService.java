@@ -47,7 +47,7 @@ public class ContactService {
     }
 
     public List<ContactEntity> getAllContacts() {
-        return Lists.newArrayList(contactEntityRepository.findAll());
+        return Lists.newArrayList(contactEntityRepository.findAllByOrderByCreatedDateDesc());
     }
 
     public void deleteContact(String contactId) {
