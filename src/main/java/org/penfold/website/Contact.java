@@ -3,6 +3,7 @@ package org.penfold.website;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -13,5 +14,6 @@ public class Contact {
     private String email;
     @NotEmpty
     private String mobile;
-    private List<Message> messages;
+
+    private List<Message> messages = Collections.emptyList();
 }
