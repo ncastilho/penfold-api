@@ -62,6 +62,11 @@ public class ApiController {
         return contactService.getPreferences(id);
     }
 
+    @PutMapping("/contacts/{id}/preferences/sms")
+    public PreferencesEntity updateSmsPreferences(@PathVariable String id) {
+        return contactService.toggleSmsEnabled(id);
+    }
+
     @GetMapping("/messages/{id}")
     public MessageEntity getMessage(@PathVariable String id) {
         return contactService.getMessage(id);
