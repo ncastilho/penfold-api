@@ -6,5 +6,6 @@
 	<logger name="org.penfold" level="TRACE" />
 	<logger name="console.logger" additivity="false" level="OFF">
 		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
 	</logger>
 </configuration>
