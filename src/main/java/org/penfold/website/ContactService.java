@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,12 +14,14 @@ public class ContactService {
     private final ContactEntityRepository contactEntityRepository;
     private final MessageEntityRepository messageEntityRepository;
     private final HistoryEntityRepository historyEntityRepository;
+    private final HistoryEventEntityRepository historyEventEntityRepository;
     private final PreferencesEntityRepository preferencesEntityRepository;
 
-    public ContactService(ContactEntityRepository contactEntityRepository, MessageEntityRepository messageEntityRepository, HistoryEntityRepository historyEntityRepository, PreferencesEntityRepository preferencesEntityRepository) {
+    public ContactService(ContactEntityRepository contactEntityRepository, MessageEntityRepository messageEntityRepository, HistoryEntityRepository historyEntityRepository, HistoryEventEntityRepository historyEventEntityRepository, PreferencesEntityRepository preferencesEntityRepository) {
         this.contactEntityRepository = contactEntityRepository;
         this.messageEntityRepository = messageEntityRepository;
         this.historyEntityRepository = historyEntityRepository;
+        this.historyEventEntityRepository = historyEventEntityRepository;
         this.preferencesEntityRepository = preferencesEntityRepository;
     }
 
@@ -33,7 +36,7 @@ public class ContactService {
 
         PreferencesEntity preferencesEntity = PreferencesEntity.builder()
                 .contactId(contactEntity.getId())
-                .mobileVerified(false)
+                .mobileVerified(true)
                 .smsEnabled(true)
                 .build();
 
@@ -98,10 +101,26 @@ public class ContactService {
         return messageEntityRepository.save(messageEntity);
     }
 
-    public List<HistoryEntity> getHistory(String contactId) {
+    public List<HistoryResource> getHistory(String contactId) {
         ContactEntity contactEntity = getContact(contactId);
 
-        return Lists.newArrayList(historyEntityRepository.findAllByContactId(contactEntity.getId()));
+        Iterable<HistoryEntity> historyEntities = historyEntityRepository.findAllByContactId(contactEntity.getId());
+
+        List<HistoryResource> result = new ArrayList<>();
+        historyEntities.forEach((item) -> {
+            Iterable<HistoryEventEntity> historyEventEntities = historyEventEntityRepository.findAllByHistoryId(item.getId());
+
+            result.add(
+                    new HistoryResource(item.getContactId(), item.getMessageId(), item.getContent(),
+                            Lists.newArrayList(historyEventEntities).stream().map((el) -> convert(el)).collect(Collectors.toList())
+                    )
+            );
+        });
+        return Lists.newArrayList(result);
+    }
+
+    private HistoryResource.EventLog convert(HistoryEventEntity e) {
+        return new HistoryResource.EventLog(State.fromString(e.getMessageStatus()), e.getMessage(), e.getCreatedDate());
     }
 
     public PreferencesEntity getPreferences(String contactId) {
@@ -118,10 +137,16 @@ public class ContactService {
         return preferencesEntityRepository.save(preferencesEntity);
     }
 
-    public void updateMessageHistory(String messageId, CallbackEvent callbackEvent) {
-        HistoryEntity historyEntity = historyEntityRepository.findByMessageSid(callbackEvent.getMessageSid());
-        historyEntity.transitionTo(callbackEvent.getMessageState(), callbackEvent.getMessage());
-        historyEntityRepository.save(historyEntity);
+    public void updateMessageHistoryEvent(String historyId, CallbackEvent callbackEvent) {
+        RunAs.runAsAdmin(() -> {
+            HistoryEventEntity historyEventEntity = HistoryEventEntity.builder()
+                    .historyId(historyId)
+                    .messageSid(callbackEvent.getMessageSid())
+                    .messageStatus(callbackEvent.getMessageStatus())
+                    .message(callbackEvent.getMessage())
+                    .build();
+            historyEventEntityRepository.save(historyEventEntity);
+        });
     }
 
     private ContactEntity convertToContactEntity(Contact contact) {

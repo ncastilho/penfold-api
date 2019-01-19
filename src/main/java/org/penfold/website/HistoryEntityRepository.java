@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface HistoryEntityRepository extends PagingAndSortingRepository<HistoryEntity, String> {
     Iterable<HistoryEntity> findAllByContactId(String contactId);
 
-    HistoryEntity findByMessageSid(String messageSid);
+//    HistoryEntity findByMessageSid(String messageSid);
 }

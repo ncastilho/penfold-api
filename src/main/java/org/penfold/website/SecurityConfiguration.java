@@ -14,6 +14,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.cors()
 				.and()
 			.authorizeRequests()
+				.antMatchers("/api/callback/**").permitAll()
 				.antMatchers("/contacts/**").hasAuthority("SCOPE_message:read")
 				.anyRequest().authenticated()
 				.and()

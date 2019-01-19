@@ -27,18 +27,18 @@ public class SmsGateway {
         this.callbackHost = callbackHost;
     }
 
-    public String sendMessage(String messageId, String toNumber, String body) {
+    public String sendMessage(String historyId, String toNumber, String body) {
         Twilio.init(accountSid, authToken);
 
         Message message = Message.creator(new PhoneNumber(toNumber), new PhoneNumber(fromNumber), body)
-                .setStatusCallback(createStatusCallbackURI(messageId))
+                .setStatusCallback(createStatusCallbackURI(historyId))
                 .create();
 
         return message.getSid();
     }
 
-    private URI createStatusCallbackURI(String messageId) {
-        String uri = String.format("%s%s/api/callback/%s", callbackHost, messageId);
+    private URI createStatusCallbackURI(String historyId) {
+        String uri = String.format("%s/api/callback/%s", callbackHost, historyId);
         return URI.create(uri);
     }
 }

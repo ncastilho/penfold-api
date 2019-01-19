@@ -16,13 +16,15 @@ public class SmsSchedulingService {
     private final MessageEntityRepository messageEntityRepository;
     private final PreferencesEntityRepository preferencesEntityRepository;
     private final HistoryEntityRepository historyEntityRepository;
+    private final HistoryEventEntityRepository historyEventEntityRepository;
     private final SmsGateway smsGateway;
 
-    public SmsSchedulingService(ContactEntityRepository contactEntityRepository, MessageEntityRepository messageEntityRepository, PreferencesEntityRepository preferencesEntityRepository, HistoryEntityRepository historyEntityRepository, SmsGateway smsGateway) {
+    public SmsSchedulingService(ContactEntityRepository contactEntityRepository, MessageEntityRepository messageEntityRepository, PreferencesEntityRepository preferencesEntityRepository, HistoryEntityRepository historyEntityRepository, HistoryEventEntityRepository historyEventEntityRepository, SmsGateway smsGateway) {
         this.contactEntityRepository = contactEntityRepository;
         this.messageEntityRepository = messageEntityRepository;
         this.preferencesEntityRepository = preferencesEntityRepository;
         this.historyEntityRepository = historyEntityRepository;
+        this.historyEventEntityRepository = historyEventEntityRepository;
         this.smsGateway = smsGateway;
     }
 
@@ -38,41 +40,62 @@ public class SmsSchedulingService {
         messageEntities.forEach(this::sendSms);
     }
 
-    private void sendSms(MessageEntity message) {
-        PreferencesEntity preferences = getPreferencesEntity(message);
+    private void sendSms(MessageEntity messageEntity) {
+        PreferencesEntity preferences = getPreferencesEntity(messageEntity);
 
         boolean isSmsEnabled = preferences.isSmsEnabled();
         boolean isMobileVerified = preferences.isMobileVerified();
 
         if (!isSmsEnabled || !isMobileVerified) {
-            log.warn("Cannot send message. Sms is disabled or mobile is not verified: [id={}, isSmsEnabled={}, mobileVerified={}]", message.getId(), isSmsEnabled, isMobileVerified);
+            log.warn("Cannot send message. Sms is disabled or mobile is not verified: [messageId={}, isSmsEnabled={}, mobileVerified={}]", messageEntity.getId(), isSmsEnabled, isMobileVerified);
             return;
         }
 
-        ContactEntity contact = getContactEntity(message);
-        HistoryEntity history = createHistoryEntity(message, contact);
+        ContactEntity contactEntity = getContactEntity(messageEntity);
 
-        try {
-            String messageSid = smsGateway.sendMessage(
-                    message.getId(),
-                    contact.getMobile(),
-                    message.getContent());
+        RunAs.runAsAdmin(() -> {
+            HistoryEntity historyEntity = historyEntityRepository.save(createHistoryEntity(messageEntity, contactEntity));
 
-            history.setMessageSid(messageSid);
-            history.transitionTo(State.FORWARDED, String.format("Message has been forwarded: [sid=%s]", messageSid));
-        } catch (Exception ex) {
-            log.error(ex.getMessage(), ex);
-            history.transitionTo(State.FAILED, ex.getMessage());
-        } finally {
-            historyEntityRepository.save(history);
-        }
+            try {
+                String messageSid = smsGateway.sendMessage(
+                        historyEntity.getId(),
+                        contactEntity.getMobile(),
+                        messageEntity.getContent());
+
+                saveForwardedEvent(historyEntity.getId(), messageSid);
+
+                historyEntity.setMessageSid(messageSid);
+            } catch (Exception ex) {
+                log.error(ex.getMessage(), ex);
+                saveFailedEvent(historyEntity.getId(), ex.getMessage());
+            } finally {
+                historyEntityRepository.save(historyEntity);
+            }
+        });
+    }
+
+    private void saveFailedEvent(String historyEntityId, String message) {
+        historyEventEntityRepository.save(HistoryEventEntity.builder()
+                .historyId(historyEntityId)
+                .messageStatus("FAILED")
+                .message(message)
+                .build());
+    }
+
+    private void saveForwardedEvent(String historyEntityId, String messageSid) {
+        historyEventEntityRepository.save(HistoryEventEntity.builder()
+                .historyId(historyEntityId)
+                .messageSid(messageSid)
+                .messageStatus("FORWARDED")
+                .message(String.format("Message has been forwarded: [sid=%s]", messageSid))
+                .build());
     }
 
     private PreferencesEntity getPreferencesEntity(MessageEntity message) {
         PreferencesEntity preferencesEntity = preferencesEntityRepository.findByContactId(message.getContactId());
 
         if (preferencesEntity == null) {
-            throw new IllegalStateException(String.format("Couldn't find contact preferences for message: [id=%s]", message.getId()));
+            throw new IllegalStateException(String.format("Couldn't find contact preferences for message: [messageId=%s]", message.getId()));
         }
 
         return preferencesEntity;
@@ -82,7 +105,7 @@ public class SmsSchedulingService {
         Optional<ContactEntity> contact = contactEntityRepository.findById(message.getContactId());
 
         if (!contact.isPresent()) {
-            throw new IllegalStateException(String.format("Found an orphan message: [id=%s]", message.getId()));
+            throw new IllegalStateException(String.format("Found an orphan message: [messageId=%s]", message.getId()));
         }
 
         return contact.get();
@@ -95,7 +118,6 @@ public class SmsSchedulingService {
                 .mobile(contact.getMobile())
                 .content(message.getContent())
                 .scheduledTime(message.getScheduledTime())
-                .events(new ArrayList<>())
                 .build();
     }
 

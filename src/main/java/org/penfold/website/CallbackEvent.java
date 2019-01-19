@@ -17,10 +17,6 @@ public class CallbackEvent {
     private String from;
     private String to;
 
-    public State getMessageState() {
-        return State.fromString(messageStatus);
-    }
-
     public String getMessage() {
         if (StringUtils.isBlank(errorCode)) {
             return String.format("Message has been %s: [sid=%s]", messageStatus, messageSid);

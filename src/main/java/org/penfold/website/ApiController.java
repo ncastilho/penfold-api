@@ -53,7 +53,7 @@ public class ApiController {
     }
 
     @GetMapping("/contacts/{id}/history")
-    public List<HistoryEntity> getHistory(@PathVariable String id) {
+    public List<HistoryResource> getHistory(@PathVariable String id) {
         return contactService.getHistory(id);
     }
 
@@ -85,7 +85,7 @@ public class ApiController {
     @PostMapping(value = "/callback/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public void callback(@PathVariable String id, @Valid @ModelAttribute CallbackEvent callbackEvent) {
         //TODO id, sid, token, from, to, error msg / code verification / validation
-        contactService.updateMessageHistory(id, callbackEvent);
+        contactService.updateMessageHistoryEvent(id, callbackEvent);
     }
 
 }
