@@ -1,5 +1,6 @@
 package org.penfold.website;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -7,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Collections;
 
+@Slf4j
 public class RunAs {
 
     @FunctionalInterface
@@ -14,8 +16,8 @@ public class RunAs {
         default void run() {
             try {
                 runWithException();
-            } catch (Exception e) {
-                // ignore
+            } catch (Exception ex) {
+                log.error(ex.getMessage(), ex);
             }
         }
         void runWithException() throws Exception;
